@@ -1,0 +1,57 @@
+<div class="todo-container">
+
+  <h1>My To-Do List</h1>
+  <p class="subtitle">Manage your daily tasks</p>
+
+  <!-- Add task -->
+  <div class="input-section">
+    <input type="text" placeholder="Enter a new task" [(ngModel)]="newTask" (keyup.enter)="addTask()" />
+
+    <button (click)="addTask()">
+      Add Task
+    </button>
+  </div>
+
+  <!-- Task list -->
+  <ul class="task-list">
+
+    @for (task of tasks(); track task.id) {
+
+    <li>
+      <label>
+        <input type="checkbox" [checked]="task.completed" (change)="toggleTask(task.id)" />
+
+        <span [class.completed]="task.completed">
+          {{ task.title }}
+        </span>
+      </label>
+
+      <button class="delete-btn" (click)="deleteTask(task.id)">
+        Delete
+      </button>
+    </li>
+
+    } @empty {
+
+    <li class="empty-message">
+      No tasks available. Add your first task!
+    </li>
+
+    }
+
+  </ul>
+
+  <!-- Footer -->
+  <div class="footer">
+
+    <p>Remaining Tasks: {{ remainingTasks() }}</p>
+
+    @if (tasks().length > remainingTasks()) {
+    <button class="clear-btn" (click)="clearCompleted()">
+      Clear Completed
+    </button>
+    }
+
+  </div>
+
+</div>
